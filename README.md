@@ -4,6 +4,75 @@
 Stevens Institute of Technology · School of Engineering and Science  
 Spring 2026 · Group Project Proposal
 
+## Quick Start (Implementation)
+
+The executable project code is in `src/` and `agent/`. Proposal/reference
+documents remain in `proposal.md` and `REFERENCE.md`.
+
+### 1) Set up environment
+
+```powershell
+python -m venv .venv
+.venv\Scripts\activate
+pip install -r requirements.txt
+```
+
+### 2) Configure credentials (optional, with safe fallbacks)
+
+```powershell
+copy .env.example .env
+```
+
+Supported keys:
+- `REDDIT_CLIENT_ID`
+- `REDDIT_CLIENT_SECRET`
+- `REDDIT_USER_AGENT`
+- `FRED_API_KEY`
+
+If some keys are missing, the pipeline still runs and defaults unavailable
+alternative-data features to neutral values.
+
+### 3) Build merged feature table
+
+```powershell
+python src/01_data_pipeline.py --start 2021-01-04 --tickers AAPL TSLA NVDA JPM
+```
+
+Output:
+- `data/features/master_features.csv`
+
+### 4) Train and evaluate models
+
+```powershell
+python src/02_train_models.py
+```
+
+Outputs:
+- `results/results_A.csv`
+- `results/results_B.csv`
+- `results/fold_metrics.csv`
+- `results/figures/exp_a_vs_b.png`
+- `results/figures/confusion_matrix.png`
+- `results/figures/shap.png`
+- `models/rf_best.pkl`
+
+### 5) Run the agent
+
+```powershell
+python agent/03_agent.py --ticker TSLA
+streamlit run agent/streamlit_app.py
+```
+
+### Repository policy
+
+Generated artifacts are ignored by default:
+- `data/raw/`
+- `data/features/master_features.csv`
+- `results/*.csv`
+- `results/figures/*.png`
+- `models/*.pkl`
+- `update_checker_cache.pkl`
+
 ---
 
 ## Abstract

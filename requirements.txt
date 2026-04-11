@@ -26,3 +26,7 @@ seaborn>=0.13.0
 
 # --- Agent / Dashboard ---
 streamlit>=1.32.0                 # Streamlit live dashboard (Python 3.9+)
+
+# --- Utilities ---
+python-dotenv>=1.0.1              # Load local .env for API credentials
+joblib>=1.4.2                     # Model bundle serialization
