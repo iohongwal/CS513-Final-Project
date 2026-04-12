@@ -19,7 +19,7 @@ FIGURES_DIR = RESULTS_DIR / "figures"
 START_DATE = "2021-01-04"
 END_DATE = date.today().isoformat()
 
-TICKERS = ["AAPL", "TSLA", "NVDA", "JPM"]
+TICKERS = ["AAPL", "TSLA", "NVDA", "JPM", "AMZN", "MSFT", "META"]
 SPY_TICKER = "SPY"
 VIX_TICKER = "^VIX"
 
