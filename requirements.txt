@@ -1,0 +1,25 @@
+# ── Core Data Science ──────────────────────────────────────────
+numpy>=1.26.0
+pandas>=2.2.0
+scipy>=1.13.0
+
+# ── Machine Learning ───────────────────────────────────────────
+scikit-learn>=1.4.0          # kNN, GNB, CART, RF, MLP, StandardScaler
+imbalanced-learn>=0.12.0
+
+# ── Image Processing ───────────────────────────────────────────
+opencv-python>=4.9.0         # imread, resize, Canny, cvtColor
+scikit-image>=0.22.0         # HOG, LBP (local_binary_pattern)
+Pillow>=10.3.0               # image open/display support
+shap>=0.45.0                 # SHAP values
+
+# ── Visualization ──────────────────────────────────────────────
+matplotlib>=3.8.0            # confusion matrix, plots
+seaborn>=0.13.0              # heatmaps, distribution plots
+
+# ── Notebook Support ───────────────────────────────────────────
+jupyterlab>=4.1.0            # development environment
+ipykernel>=6.29.0
+tqdm>=4.66.0
+joblib>=1.4.0
+

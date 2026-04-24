@@ -1,0 +1,15 @@
+.venv/
+venv/
+.env
+__pycache__/
+*.pyc
+pip-build-env-*/
+pip-build-tracker-*/
+pip-install-*/
+pip-ephem-wheel-cache-*/
+pip-metadata-*/
+pip-unpack-*/
+matplotlib-*/
+.cache/
+
+
