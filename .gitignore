@@ -12,5 +12,9 @@ pip-unpack-*/
 matplotlib-*/
 .cache/
 .github/
+app/__pycache__
+.gradio/
+gradio/
+
 
 
