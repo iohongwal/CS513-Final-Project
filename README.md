@@ -23,20 +23,17 @@ This is a machine learning project for classifying facial expressions into **5 e
 
 ## Feature Engineering
 
-The project extracts **18 core features** per 48×48 image:
+The project now extracts **41 core features** per 48×48 image:
 
 | Feature Family | Count | Description | Signal Strength |
 |---|---|---|---|
-| **Intensity** | 1 | Brightness mean | 1.20× moderate |
-| **Edge Detection** | 1 | Lower face edge density (mouth/jaw activity) | 1.11× moderate |
-| **HOG Histogram** | 16 | 16-bin Histogram of Oriented Gradients | 1.81× strong (bins 13–15) |
+| **Base Visual Features** | 24 | Brightness, edge density, 16-bin HOG, 6-bin LBP | Captures global and local texture |
+| **Facial Geometry** | 17 | MediaPipe FaceMesh landmarks for eyes, brows, mouth, cheeks, nose, and face shape | Adds expression-specific shape cues |
 
 **Feature Signal Summary**:
-- ✅ **Strong** (>1.3×): 3 features (captures high-gradient regions)
-- ⚠️ **Moderate** (1.1–1.3×): 6 features
-- ❌ **Weak** (<1.1×): 9 features (kept for Random Forest interaction modeling)
-
-*Optional Extension*: 17 additional facial geometry features via MediaPipe FaceMesh (F25–F41 in pipeline_v2_F41.md)
+- ✅ **Base visual features** provide the strongest texture signal, especially HOG bins and the lower-face edge cue.
+- ✅ **Geometry features** add complementary structure for expression changes such as eye opening, brow motion, and mouth shape.
+- ✅ The combined F41 set is the current representation used by the training notebooks and Gradio app.
 
 ---
 
@@ -218,7 +215,7 @@ The current extractor uses 41 features per image: 24 base visual features and 17
 **Base Features (F01–F24)**:
 - F01: `brightness_mean` — normalized mean pixel intensity
 - F02: `lower_edge_density` — Canny edge density in the lower face region
-- F03–F18: `hog_h00`–`hog_h15` — 16-bin Histogram of Oriented Gradients
+- F03–F18: `hog_h00`–`hog_h15` — 16-bin Histogram of Oriented Gradients within the F01–F24 base-feature block
 - F19–F24: `lbp_h00`–`lbp_h05` — 6-bin Local Binary Pattern histogram
 
 **Geometry Features (F25–F41)**:
