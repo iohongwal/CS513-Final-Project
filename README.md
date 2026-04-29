@@ -1,6 +1,6 @@
 # CS513 Final Project: Facial Emotion Detection
 
-A comprehensive data mining pipeline for facial emotion classification using the FER-2013 dataset. This project implements custom feature extraction, model training, and evaluation with a Streamlit web application for inference.
+A comprehensive data mining pipeline for facial emotion classification using the FER-2013 dataset. This project implements custom feature extraction, model training, and evaluation with a Gradio web application for inference.
 
 ## Project Overview
 
@@ -67,12 +67,14 @@ The project extracts **18 core features** per 48×48 image:
 
 ## Project Pipeline
 
+The main workflow for this project follows the F41 notebook set:
+
 ```
-Phase 1: Exploratory Data Analysis (EDA)
-  └─ notebooks/01_eda_F41.ipynb
+Phase 1: Feature Extraction
+  └─ notebooks/01_features_F41.ipynb → notebooks/csv/features_train_F41.csv, notebooks/csv/features_test_F41.csv
   
-Phase 2: Feature Extraction
-  └─ notebooks/02_features_F41.ipynb → features_train.csv, features_test.csv
+Phase 2: Exploratory Data Analysis (EDA)
+  └─ notebooks/02_eda_F41.ipynb
   
 Phase 3: Model Training & Evaluation
   └─ notebooks/03_train_F41.ipynb → model_comparison_F41.csv
@@ -81,7 +83,7 @@ Phase 4: Model Interpretation
   └─ notebooks/04_evaluate_F41.ipynb → SHAP importance analysis
   
 Phase 5: Web Application
-  └─ app.py (Streamlit interface)
+  └─ app/ (Gradio interface and inference entrypoint)
 ```
 
 ---
@@ -98,17 +100,17 @@ pip install -r requirements.txt
 - scikit-learn, scikit-image (ML & feature extraction)
 - opencv-python (image processing)
 - mediapipe (facial landmarks)
-- streamlit (web app)
+- gradio (web app)
 - pandas, numpy (data manipulation)
 - shap (model interpretation)
 
-### 2. Run Streamlit App
+### 2. Run Gradio App
 
 ```bash
-streamlit run app.py
+python -m app.app
 ```
 
-Then open `http://localhost:8501` in your browser.
+Then open the local Gradio URL shown in the terminal.
 
 **App Features**:
 - ✅ Upload facial images (JPEG, PNG)
@@ -123,7 +125,7 @@ To retrain models from scratch:
 
 ```bash
 # Step 1: Extract features from raw images
-python preprocess.py
+jupyter nbconvert --to notebook --execute notebooks/01_features_F41.ipynb
 
 # Step 2: Train models (5-fold CV) and generate reports
 jupyter nbconvert --to notebook --execute notebooks/03_train_F41.ipynb
@@ -140,19 +142,21 @@ jupyter nbconvert --to notebook --execute notebooks/04_evaluate_F41.ipynb
 CS513-Final-Project/
 ├── README.md                          # This file
 ├── requirements.txt                   # Python dependencies
-├── app.py                             # Streamlit web application
-├── model.py                           # Model inference utilities
-├── preprocess.py                      # Feature extraction pipeline
-├── Pipeline.md                        # Detailed methodology (v6.0, 18 features)
-├── pipeline_v2_F41.md                 # Extended pipeline (41 features + geometry)
+├── app/
+│   ├── __init__.py                    # App package
+│   ├── app.py                         # Gradio web application entrypoint
+│   └── inference.py                   # Model inference utilities
+├── pipeline_v2.md                     # Detailed methodology and feature pipeline
 │
 ├── data/
 │   ├── train/                         # 28,821 training images
-│   │   ├── angry/                     # 3,995 images
-│   │   ├── happy/                     # 7,215 images
-│   │   ├── neutral/                   # 4,965 images
-│   │   ├── sad/                       # 4,830 images
-│   │   └── surprise/                  # 3,171 images
+│   │   ├── angry/
+│   │   ├── disgust/
+│   │   ├── fear/
+│   │   ├── happy/
+│   │   ├── neutral/
+│   │   ├── sad/
+│   │   └── surprise/
 │   └── test/                          # 7,178 test images (same structure)
 │
 ├── notebooks/
@@ -236,7 +240,7 @@ All model results are stored in `notebooks/output/`:
 
 To reproduce:
 1. Ensure FER-2013 data is in `data/train/` and `data/test/`
-2. Run `preprocess.py` to extract features
+2. Run `notebooks/01_features_F41.ipynb` to extract features
 3. Execute notebooks in order: 02 → 03 → 04
 
 ---
