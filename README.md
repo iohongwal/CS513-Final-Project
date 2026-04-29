@@ -193,7 +193,7 @@ CS513-Final-Project/
 
 ### Model Selection
 - **Random Forest** (best): Captures feature interactions; provides SHAP importances for interpretability
-- **SVM (RBF)**: Strong baseline on low-dimensional (18-feat) feature space
+- **SVM (RBF)**: Strong baseline on the compact F24 base-feature space
 - **MLP**: Explores non-linear feature combinations
 - **Baseline models**: KNN, Decision Tree, Naive Bayes for comparison
 
@@ -211,22 +211,40 @@ CS513-Final-Project/
 
 ## Feature Details
 
-### 18-Feature Set (F01–F18)
+### 41-Feature Set (F01–F41)
 
-**Intensity Features**:
-- F01: `brightness_mean` — mean pixel intensity (0–255)
+The current extractor uses 41 features per image: 24 base visual features and 17 facial-geometry features.
 
-**Edge Features**:
-- F02: `lower_edge_density` — Canny edge density in bottom 50% (mouth/jaw)
+**Base Features (F01–F24)**:
+- F01: `brightness_mean` — normalized mean pixel intensity
+- F02: `lower_edge_density` — Canny edge density in the lower face region
+- F03–F18: `hog_h00`–`hog_h15` — 16-bin Histogram of Oriented Gradients
+- F19–F24: `lbp_h00`–`lbp_h05` — 6-bin Local Binary Pattern histogram
 
-**HOG Histogram** (F03–F18):
-- 16-bin Histogram of Oriented Gradients
-- 11.25° orientation bins → captures local edge structure
-- Strong signal in bins 13–15 (high-gradient regions)
+**Geometry Features (F25–F41)**:
+- F25: `ear_L` — left eye aspect ratio
+- F26: `ear_R` — right eye aspect ratio
+- F27: `brow_eye_L` — left brow-to-eye distance
+- F28: `brow_eye_R` — right brow-to-eye distance
+- F29: `inter_brow` — distance between the brows
+- F30: `brow_raise_L` — left brow raise
+- F31: `brow_raise_R` — right brow raise
+- F32: `MAR` — mouth aspect ratio
+- F33: `lip_pull` — lip corner pull / smile stretch
+- F34: `lip_droop` — lip corner droop
+- F35: `mouth_curl` — mouth curl / upward turn
+- F36: `lip_tight` — lip tightness
+- F37: `jaw_open` — jaw openness
+- F38: `cheek_L` — left cheek raise
+- F39: `cheek_R` — right cheek raise
+- F40: `nose_lip` — nose-to-lip distance
+- F41: `face_AR` — face aspect ratio
 
-**For Extended 41-Feature Set**, see `pipeline_v2_F41.md`:
-- F19–F24: Local Binary Pattern (LBP) features
-- F25–F41: MediaPipe facial geometry (eyes, brows, mouth, cheeks)
+**Feature Notes**:
+- HOG remains the strongest base signal for local facial structure.
+- LBP adds micro-texture sensitivity for subtle expression cues.
+- Geometry features are normalized with facial proportions so the F41 set stays image-scale aware.
+- The resulting training CSVs contain 42 columns total: 41 features plus the `label` column.
 
 ---
 
