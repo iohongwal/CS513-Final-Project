@@ -29,5 +29,5 @@ streamlit>=1.35
 python-dotenv>=1.0
 gradio>=4.0
 Pillow>=10.0
-streamlit>=1.35  # optional
+streamlit>=1.35 
 
