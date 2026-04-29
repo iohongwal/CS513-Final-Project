@@ -15,6 +15,6 @@ matplotlib-*/
 app/__pycache__
 .gradio/
 gradio/
-
+.agents/
 
 
